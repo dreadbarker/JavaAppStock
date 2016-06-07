@@ -5,6 +5,8 @@
  */
 package YahooFinance;
 
+import java.util.Date;
+
 /**
  *
  * @author Jean Pierre Patzlaff
@@ -59,37 +61,37 @@ public class yQuote {
     public float FiftydayMovingAverage;
     public float TwoHundreddayMovingAverage;
     public float ChangeFromTwoHundreddayMovingAverage;
-    public string PercentChangeFromTwoHundreddayMovingAverage;
-    public decimal? ChangeFromFiftydayMovingAverage;
-    public string PercentChangeFromFiftydayMovingAverage;
-    public string Name;
-    public string Notes;
-    public decimal? Open;
-    public decimal? PreviousClose;
-    public decimal? PricePaid;
-    public string ChangeinPercent;
-    public decimal? PriceSales;
-    public decimal? PriceBook;
-    public DateTime? ExDividendDate;
-    public decimal? PERatio;
-    public DateTime? DividendPayDate;
-    public decimal? PERatioRealtime;
-    public decimal? PEGRatio;
-    public decimal? PriceEPSEstimateCurrentYear;
-    public decimal? PriceEPSEstimateNextYear;
-    public string Symbol;
-    public string SharesOwned;
-    public decimal? ShortRatio;
-    public DateTime? LastTradeTime;
-    public string TickerTrend;
-    public decimal? OneyrTargetPrice;
-    public int? Volume;
-    public decimal? HoldingsValue;
-    public decimal? HoldingsValueRealtime;
-    public string YearRange;
-    public string DaysValueChange;
-    public string DaysValueChangeRealtime;
-    public string StockExchange;
-    public decimal? DividendYield;
-    public string PercentChange;
+    public String PercentChangeFromTwoHundreddayMovingAverage;
+    public float ChangeFromFiftydayMovingAverage;
+    public String PercentChangeFromFiftydayMovingAverage;
+    public String Name;
+    public String Notes;
+    public float Open;
+    public float PreviousClose;
+    public float PricePaid;
+    public String ChangeinPercent;
+    public float PriceSales;
+    public float PriceBook;
+    public Date ExDividendDate;
+    public float PERatio;
+    public Date DividendPayDate;
+    public float PERatioRealtime;
+    public float PEGRatio;
+    public float PriceEPSEstimateCurrentYear;
+    public float PriceEPSEstimateNextYear;
+    public String Symbol;
+    public String SharesOwned;
+    public float ShortRatio;
+    public Date LastTradeTime;
+    public String TickerTrend;
+    public float OneyrTargetPrice;
+    public int Volume;
+    public float HoldingsValue;
+    public float HoldingsValueRealtime;
+    public String YearRange;
+    public String DaysValueChange;
+    public String DaysValueChangeRealtime;
+    public String StockExchange;
+    public float DividendYield;
+    public String PercentChange;
 }

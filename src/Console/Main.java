@@ -10,6 +10,8 @@ import java.util.ArrayList;
 import java.io.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.util.Date;
+
 /**
  *
  * @author Jean Pierre Patzlaff
@@ -61,7 +63,7 @@ public class Main {
             }
 
             String url = "http://query.yahooapis.com/v1/public/yql?q=select%20*%20from%20yahoo.finance.quotes%20where%20symbol%20in%20(%22||TICKER||%22)%0A%09%09&format=json&diagnostics=true&env=http%3A%2F%2Fdatatables.org%2Falltables.env";
-            System.out.println(DateTime.Now.ToString());
+            System.out.println(new Date().toString());
             System.out.println("Podem dobrar:");
             System.out.println();
             ImprimeDadosBolsa(sq, bovespa, url);
@@ -91,36 +93,38 @@ public class Main {
                     stock.Ask > 0 && 
                     stock.Ask * 2 < stock.YearHigh)
                 {
-                    if (!Configuracao.getListPennyStocks() && stock.Ask < 1.00M)
+                    if (!Configuracao.getListPennyStocks() && 
+                        stock.Ask < 1.00) {
                         continue;
+                    }
 
                     StringBuilder sb = new StringBuilder();
-                    sb.Append("Ação: " + stock.Symbol + "; ");
-                    sb.Append("Atual: " + stock.Ask + "; ");
-                    sb.Append("Variação ano: " + stock.YearLow + "-" + stock.YearHigh + "; ");
+                    sb.append("Ação: " + stock.Symbol + "; ");
+                    sb.append("Atual: " + stock.Ask + "; ");
+                    sb.append("Variação ano: " + stock.YearLow + "-" + stock.YearHigh + "; ");
                     //TODO
                     //sb.Append("Vezes em que dobrou: " + ObterVezesEmQueDobrou(stock.Symbol, bolsa.Nome) + "; ");
 
                     //http://www.bmfbovespa.com.br/indices/ResumoCarteiraTeorica.aspx?Indice=IDIV&idioma=pt-br
                     //TODO:
-                    sb.Append("IDIV: ????; "); //Destaque do IDIV
+                    sb.append("IDIV: ????; "); //Destaque do IDIV
                     //http://finance.yahoo.com/news/investing-education--p-e-ratio-191844134.html
                     //Perto de 1 = cálcular para dobrar... P/E (ttm) e EPS (ttm):
-                    sb.Append("PEG: ");
-                    if (stock.PEGRatio.HasValue)
-                        sb.Append(stock.PEGRatio.Value);
+                    sb.append("PEG: ");
+                    if (stock.PEGRatio > 0)
+                        sb.append(stock.PEGRatio);
                     else
-                        sb.Append("???");
-                    sb.Append("; ");
-                    Console.WriteLine(sb.ToString());
+                        sb.append("???");
+                    sb.append("; ");
+                    System.out.println(sb.toString());
                 }
             }
-            catch
+            catch (Exception ex)
             {
-                //Console.WriteLine("erro ao converter :" + acao + ";"); 
+                System.out.println("erro ao converter :" + acao + ";"); 
             }
         }
-        Console.WriteLine();
+        System.out.println();
     }
 
         //TODO
