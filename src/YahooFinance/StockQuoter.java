@@ -51,11 +51,11 @@ public class StockQuoter {
         yQuote qte = new yQuote();
         String requestUrl = url;
         requestUrl = requestUrl.replaceAll("||TICKER||", ticker);
-
-        /* TODO: converter pra JAVA
+        
         // MAKE WEB REQUEST TO THE URL
         String content = MakeWebRequestToTheURL(requestUrl);
-
+        
+        /* TODO: converter pra JAVA
         // DESERIALIZE THE JSON RESPONSE TO AN OBJECT
         JObject yahooresult = JObject.Parse(content);
         JToken result = yahooresult["query"]["results"]["quote"];
@@ -239,15 +239,26 @@ public class StockQuoter {
             if (tableYfncSumTab.outerHtml().contains("There is no Components data available for"))
                 throw new YahooExceptionNoComponentsDataAvailable();
 
-            /* falta converter 
+            
             //2º tr 
-            var tr = tableYfncSumTab.ChildNodes[1];
+            //var tr = tableYfncSumTab.ChildNodes[1];
+            Node tbody = tableYfncSumTab.childNode(1);
+            Node segundoTR = tbody.childNode(3);
+                        
             //1º td
-            var td = tr.ChildNodes[0];
+            //var td = tr.ChildNodes[0];
+            Node primeiroTD = segundoTR.childNode(1);
+                        
             //2º table - class="yfnc_tableout1"
-            var tableYfncTableOut1 = td.ChildNodes[3];
+            //var tableYfncTableOut1 = td.ChildNodes[3];
+            Node segundaTableYfncTableOut1 = primeiroTD.childNode(7);
+                        
             //tr
-            var trTableAcoes = tableYfncTableOut1.ChildNodes[0];
+            //var trTableAcoes = tableYfncTableOut1.ChildNodes[0];
+            //Node trTableAcoes = segundaTableYfncTableOut1.childNode();
+            
+            
+            /* falta converter 
             //td
             var tdTableAcoes = trTableAcoes.ChildNodes[0];
             //Table
