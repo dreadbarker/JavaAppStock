@@ -255,14 +255,41 @@ public class StockQuoter {
                         
             //tr
             //var trTableAcoes = tableYfncTableOut1.ChildNodes[0];
-            //Node trTableAcoes = segundaTableYfncTableOut1.childNode();
-            
-            
-            /* falta converter 
+            Node tBody = segundaTableYfncTableOut1.childNode(1);
+            Node trTableAcoes = tBody.childNode(1);            
+                        
             //td
-            var tdTableAcoes = trTableAcoes.ChildNodes[0];
+            //var tdTableAcoes = trTableAcoes.ChildNodes[0];
+            Node tdTableAcoes = trTableAcoes.childNode(1);
+                        
             //Table
-            var tableAcoes = tdTableAcoes.ChildNodes[0];
+            //var tableAcoes = tdTableAcoes.ChildNodes[0];
+            Node tableAcoes = tdTableAcoes.childNode(1);
+            Node tBodyTableAcoes = tableAcoes.childNode(1);
+                 
+            //iterar somente pelos nodes do tipo Element
+            int ignorar = 1;
+            for(Node filho : tBodyTableAcoes.childNodes())
+            {                
+                if(!org.jsoup.nodes.Element.class.isInstance(filho))
+                    continue;
+                                
+                //primeira Element é header, por isso ignora
+                if (ignorar == 1)
+                {
+                    ignorar--;
+                    continue;
+                }
+                
+                Node tdYfncTableData1 = filho.childNode(5);
+                Node b = tdYfncTableData1.childNode(0);
+                Node span = b.childNode(0);
+                Node text = span.childNode(0);
+                System.out.println(list.size());
+                
+                list.add(text.outerHtml());
+            }
+            /* falta converter 
             //linhas
             int ignorar = 1;
             foreach (var linhaAcoes in tableAcoes.ChildNodes)
