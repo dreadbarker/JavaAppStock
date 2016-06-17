@@ -8,10 +8,12 @@ package YahooFinance;
 import java.io.IOException;
 import java.util.List;
 import java.util.ArrayList;
+import java.util.Date;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.nodes.Node;
+import org.json.JSONObject;
 
 /**
  *
@@ -26,43 +28,32 @@ public class StockQuoter {
     /// <returns></returns>
     public yQuote StockQuote(String ticker)
     {
-        yQuote qte = new yQuote();
         String URL = "http://query.yahooapis.com/v1/public/yql?q=select%20*%20from%20yahoo.finance.quotes%20where%20symbol%20in%20(%22||TICKER||%22)%0A%09%09&format=json&diagnostics=true&env=http%3A%2F%2Fdatatables.org%2Falltables.env";
-        String requestUrl = URL;
-        requestUrl = requestUrl.replaceAll("||TICKER||", ticker);
-
-        // MAKE WEB REQUEST TO THE URL
-        String content = MakeWebRequestToTheURL(requestUrl);
-        
-        /* TODO: converter pra JAVA        
-
-        // DESERIALIZE THE JSON RESPONSE TO AN OBJECT
-        //utilizar o jsoup para substituir o htmlagilitypack
-        JObject yahooresult = JObject.Parse(content);
-        JToken result = yahooresult["query"]["results"]["quote"];
-        qte = JsonConvert.DeserializeObject<yQuote>(result.ToString());
-        */
                 
-        return qte;
+        return StockQuote(ticker, URL);
     }
 
+    
     public yQuote StockQuote(String ticker, String url)
     {
-        yQuote qte = new yQuote();
         String requestUrl = url;
-        requestUrl = requestUrl.replaceAll("||TICKER||", ticker);
+        requestUrl = requestUrl.replace("||TICKER||", ticker);
         
         // MAKE WEB REQUEST TO THE URL
-        String content = MakeWebRequestToTheURL(requestUrl);
-        
-        /* TODO: converter pra JAVA
+        String content = MakeWebRequestToTheURL(requestUrl, true);
+                
         // DESERIALIZE THE JSON RESPONSE TO AN OBJECT
+        /*
         JObject yahooresult = JObject.Parse(content);
         JToken result = yahooresult["query"]["results"]["quote"];
         qte = JsonConvert.DeserializeObject<yQuote>(result.ToString());
         */
+        JSONObject jsonObject = new JSONObject(content);
+        JSONObject query = jsonObject.getJSONObject("query");
+        JSONObject results = query.getJSONObject("results");
+        JSONObject quote = results.getJSONObject("quote");
         
-        return qte;
+        return ConvertJSONToYQuote(quote);
     }
 
     public List<String> GetStockQuoteList()
@@ -103,13 +94,18 @@ public class StockQuoter {
         return list;        
     }
 
-    private static String MakeWebRequestToTheURL(String requestUrl)
+    private static String MakeWebRequestToTheURL(String requestUrl, Boolean isResponseJSON)
     {
         Document doc = null;
+        String json = "";
         try {
-            doc = Jsoup.connect(requestUrl).get();
+            if(isResponseJSON)
+                json = Jsoup.connect(requestUrl).ignoreContentType(true).execute().body();
+            else
+                doc = Jsoup.connect(requestUrl).get();
+            
         } catch (IOException ex) {
-            System.out.println("erro ao realizar request para a URL");
+            System.out.println("erro ao realizar request para a URL"+ex.getMessage());
         }
         /* 
             // MAKE WEB REQUEST TO THE URL
@@ -123,7 +119,10 @@ public class StockQuoter {
             string content = read.ReadToEnd();
             return content;
         */
-        return doc.outerHtml();
+        if(isResponseJSON)
+            return json;
+        else
+            return doc.outerHtml();            
     }
 
     public List<String> GetStockQuoteListBovespa() 
@@ -151,7 +150,7 @@ public class StockQuoter {
             throws YahooExceptionNoComponentsDataAvailable
     {
         List<String> URIList = new ArrayList<String>();
-        for (int i = 0; i <= 52; i++)
+        for (int i = 0; i <= 51; i++)
         {
             URIList.add("http://finance.yahoo.com/q/cp?s=^IXIC&c=" + i);
         };
@@ -195,7 +194,7 @@ public class StockQuoter {
         String requestUrl = URIList.get(0);
 
         // MAKE WEB REQUEST TO THE URL
-        String content = MakeWebRequestToTheURL(requestUrl);
+        String content = MakeWebRequestToTheURL(requestUrl, false);
 
         ArrayList<String> list = new ArrayList<String>();
             
@@ -281,10 +280,20 @@ public class StockQuoter {
                     continue;
                 }
                 
-                Node tdYfncTableData1 = filho.childNode(5);
+                Node tdYfncTableData1 = filho.childNode(1);
                 Node b = tdYfncTableData1.childNode(0);
-                Node span = b.childNode(0);
-                Node text = span.childNode(0);
+                Node a = b.childNode(0);
+                //Exceção ocorrendo
+                Node text = null;
+                try
+                {
+                     text = a.childNode(0);
+                }
+                catch(Exception ex) {
+                    //System.out.println(ex.toString());
+                    continue;
+                }
+                    
                 System.out.println(list.size());
                 
                 list.add(text.outerHtml());
@@ -313,4 +322,178 @@ public class StockQuoter {
             */
         return list;
     }    
+
+    private yQuote ConvertJSONToYQuote(JSONObject quote) {
+        yQuote cotacao = new yQuote();
+        
+    /*
+        ,,,,,"BidRealtime":null,"BookValue":"16.87","Change_PercentChange":"+0.26 - +1.02%","Change":"+0.26","Commission":null,"Currency":"BRL","ChangeRealtime":null,"AfterHoursChangeRealtime":null,"DividendShare":null,"LastTradeDate":"6/17/2016","TradeDate":null,"EarningsShare":"3.33","ErrorIndicationreturnedforsymbolchangedinvalid":null,"EPSEstimateCurrentYear":null,"EPSEstimateNextYear":null,"EPSEstimateNextQuarter":"0.00","DaysLow":"25.63","DaysHigh":"26.05","YearLow":"16.27","YearHigh":"30.15","HoldingsGainPercent":null,"AnnualizedGain":null,"HoldingsGain":null,"HoldingsGainPercentRealtime":null,"HoldingsGainRealtime":null,"MoreInfo":null,"OrderBookRealtime":null,"MarketCapitalization":"142.17B","MarketCapRealtime":null,"EBITDA":"0.00","ChangeFromYearLow":"9.43","PercentChangeFromYearLow":"+57.93%","LastTradeRealtimeWithTime":null,"ChangePercentRealtime":null,"ChangeFromYearHigh":"-4.45","PercebtChangeFromYearHigh":"-14.75%","LastTradeWithTime":"12:22pm - <b>25.70</b>","LastTradePriceOnly":"25.70","HighLimit":null,"LowLimit":null,"DaysRange":"25.63 - 26.05","DaysRangeRealtime":null,"FiftydayMovingAverage":"26.51","TwoHundreddayMovingAverage":"23.33","ChangeFromTwoHundreddayMovingAverage":"2.37","PercentChangeFromTwoHundreddayMovingAverage":"+10.14%","ChangeFromFiftydayMovingAverage":"-0.81","PercentChangeFromFiftydayMovingAverage":"-3.06%","Name":"BRADESCO    ON  EJ  N1","Notes":null,"Open":"25.77","PreviousClose":"25.44","PricePaid":null,"ChangeinPercent":"+1.02%","PriceSales":"2.28","PriceBook":"1.51","ExDividendDate":"6/2/2016","PERatio":"7.72","DividendPayDate":null,"PERatioRealtime":null,"PEGRatio":"0.00","PriceEPSEstimateCurrentYear":null,"PriceEPSEstimateNextYear":null,"Symbol":"BBDC3.SA","SharesOwned":null,"ShortRatio":"0.00","LastTradeTime":"12:22pm","TickerTrend":null,"OneyrTargetPrice":null,"Volume":"218200","HoldingsValue":null,"HoldingsValueRealtime":null,"YearRange":"16.27 - 30.15","DaysValueChange":null,"DaysValueChangeRealtime":null,"StockExchange":"SAO","DividendYield":null,"PercentChange":"+1.02%"}}}}
+        */    
+    //String 
+    cotacao.symbol = quote.getString("symbol"); //"symbol":"BBDC3.SA"
+    //double 
+    cotacao.Ask = quote.getDouble("Ask"); //"Ask":"25.72"
+    //int 
+    cotacao.AverageDailyVolume = quote.getInt("AverageDailyVolume"); //"AverageDailyVolume":"1532470"
+    //float 
+    cotacao.Bid; //"Bid":"25.70"
+    //float 
+    cotacao.AskRealtime; //"AskRealtime":null
+    //float 
+    cotacao.BidRealtime;
+    //float 
+    cotacao.BookValue;
+    //String 
+    cotacao.Change_PercentChange;
+    //float 
+    cotacao.Change;
+    //String 
+    cotacao.Commission;
+    //float 
+    cotacao.ChangeRealtime;
+    //String 
+    cotacao.AfterHoursChangeRealtime;
+    //String 
+    cotacao.DividendShare;
+    //Date 
+    cotacao.LastTradeDate;
+    //Date 
+    cotacao.TradeDate;
+    //float 
+    cotacao.EarningsShare;
+    //String 
+    cotacao.ErrorIndicationreturnedforsymbolchangedinvalid;
+    //float 
+    cotacao.EPSEstimateCurrentYear;
+    //float 
+    cotacao.EPSEstimateNextYear;
+    //float 
+    cotacao.EPSEstimateNextQuarter;
+    //float 
+    cotacao.DaysLow;
+    //float 
+    cotacao.DaysHigh;
+    //float 
+    cotacao.YearLow;
+    //float 
+    cotacao.YearHigh;
+    //String 
+    cotacao.HoldingsGainPercent;
+    //float 
+    cotacao.AnnualizedGain;
+    //float 
+    cotacao.HoldingsGain;
+    //String 
+    cotacao.HoldingsGainPercentRealtime;
+    //float 
+    cotacao.HoldingsGainRealtime;
+    //String 
+    cotacao.MoreInfo;
+    //String 
+    cotacao.OrderBookRealtime;
+    //String 
+    cotacao.MarketCapitalization;
+    //String 
+    cotacao.MarketCapRealtime;
+    //String 
+    cotacao.EBITDA;
+    //float 
+    cotacao.ChangeFromYearLow;
+    //String 
+    cotacao.PercentChangeFromYearLow;
+    //String 
+    cotacao.LastTradeRealtimeWithTime;
+    //String 
+    cotacao.ChangePercentRealtime;
+    //float 
+    cotacao.ChangeFromYearHigh;
+    //String 
+    cotacao.PercebtChangeFromYearHigh;
+    //String 
+    cotacao.LastTradeWithTime;
+    //float 
+    cotacao.LastTradePriceOnly;
+    //String 
+    cotacao.HighLimit;
+    //String 
+    cotacao.LowLimit;
+    //String 
+    cotacao.DaysRange;
+    //String 
+    cotacao.DaysRangeRealtime;
+    //float 
+    cotacao.FiftydayMovingAverage;
+    //float 
+    cotacao.TwoHundreddayMovingAverage;
+    //float 
+    cotacao.ChangeFromTwoHundreddayMovingAverage;
+    //String 
+    cotacao.PercentChangeFromTwoHundreddayMovingAverage;
+    //float 
+    cotacao.ChangeFromFiftydayMovingAverage;
+    //String 
+    cotacao.PercentChangeFromFiftydayMovingAverage;
+    //String 
+    cotacao.Name;
+    //String 
+    cotacao.Notes;
+    //float 
+    cotacao.Open;
+    //float 
+    cotacao.PreviousClose;
+    //float 
+    cotacao.PricePaid;
+    //String 
+    cotacao.ChangeinPercent;
+    //float 
+    cotacao.PriceSales;
+    //float 
+    cotacao.PriceBook;
+    //Date 
+    cotacao.ExDividendDate;
+    //float 
+    cotacao.PERatio;
+    //Date 
+    cotacao.DividendPayDate;
+    //float 
+    cotacao.PERatioRealtime;
+    //float 
+    cotacao.PEGRatio;
+    //float 
+    cotacao.PriceEPSEstimateCurrentYear;
+    //float 
+    cotacao.PriceEPSEstimateNextYear;
+    //String 
+    cotacao.Symbol;
+    //String 
+    cotacao.SharesOwned;
+    //float 
+    cotacao.ShortRatio;
+    //Date 
+    cotacao.LastTradeTime;
+    //String 
+    cotacao.TickerTrend;
+    //float 
+    cotacao.OneyrTargetPrice;
+    //int 
+    cotacao.Volume;
+    //float 
+    cotacao.HoldingsValue;
+    //float 
+    cotacao.HoldingsValueRealtime;
+    //String 
+    cotacao.YearRange;
+    //String 
+    cotacao.DaysValueChange;
+    //String 
+    cotacao.DaysValueChangeRealtime;
+    //String 
+    cotacao.StockExchange;
+    //float 
+    cotacao.DividendYield;
+    //String 
+    cotacao.PercentChange;
+       
+    return cotacao;
+    }
 }
