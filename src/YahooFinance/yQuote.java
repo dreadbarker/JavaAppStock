@@ -13,7 +13,7 @@ import java.util.Date;
  */
 public class yQuote {
     public String symbol;
-    public float Ask;
+    public double Ask;
     public int AverageDailyVolume;
     public float Bid;
     public float AskRealtime;
