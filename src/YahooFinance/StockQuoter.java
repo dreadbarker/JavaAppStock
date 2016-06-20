@@ -294,7 +294,7 @@ public class StockQuoter {
                     continue;
                 }
                     
-                System.out.println(list.size());
+                //System.out.println(list.size());
                 
                 list.add(text.outerHtml());
             }
@@ -326,13 +326,13 @@ public class StockQuoter {
     private yQuote ConvertJSONToYQuote(JSONObject quote) {
         yQuote cotacao = new yQuote();
         
-    /*
-        ,,,,,"BidRealtime":null,"BookValue":"16.87","Change_PercentChange":"+0.26 - +1.02%","Change":"+0.26","Commission":null,"Currency":"BRL","ChangeRealtime":null,"AfterHoursChangeRealtime":null,"DividendShare":null,"LastTradeDate":"6/17/2016","TradeDate":null,"EarningsShare":"3.33","ErrorIndicationreturnedforsymbolchangedinvalid":null,"EPSEstimateCurrentYear":null,"EPSEstimateNextYear":null,"EPSEstimateNextQuarter":"0.00","DaysLow":"25.63","DaysHigh":"26.05","YearLow":"16.27","YearHigh":"30.15","HoldingsGainPercent":null,"AnnualizedGain":null,"HoldingsGain":null,"HoldingsGainPercentRealtime":null,"HoldingsGainRealtime":null,"MoreInfo":null,"OrderBookRealtime":null,"MarketCapitalization":"142.17B","MarketCapRealtime":null,"EBITDA":"0.00","ChangeFromYearLow":"9.43","PercentChangeFromYearLow":"+57.93%","LastTradeRealtimeWithTime":null,"ChangePercentRealtime":null,"ChangeFromYearHigh":"-4.45","PercebtChangeFromYearHigh":"-14.75%","LastTradeWithTime":"12:22pm - <b>25.70</b>","LastTradePriceOnly":"25.70","HighLimit":null,"LowLimit":null,"DaysRange":"25.63 - 26.05","DaysRangeRealtime":null,"FiftydayMovingAverage":"26.51","TwoHundreddayMovingAverage":"23.33","ChangeFromTwoHundreddayMovingAverage":"2.37","PercentChangeFromTwoHundreddayMovingAverage":"+10.14%","ChangeFromFiftydayMovingAverage":"-0.81","PercentChangeFromFiftydayMovingAverage":"-3.06%","Name":"BRADESCO    ON  EJ  N1","Notes":null,"Open":"25.77","PreviousClose":"25.44","PricePaid":null,"ChangeinPercent":"+1.02%","PriceSales":"2.28","PriceBook":"1.51","ExDividendDate":"6/2/2016","PERatio":"7.72","DividendPayDate":null,"PERatioRealtime":null,"PEGRatio":"0.00","PriceEPSEstimateCurrentYear":null,"PriceEPSEstimateNextYear":null,"Symbol":"BBDC3.SA","SharesOwned":null,"ShortRatio":"0.00","LastTradeTime":"12:22pm","TickerTrend":null,"OneyrTargetPrice":null,"Volume":"218200","HoldingsValue":null,"HoldingsValueRealtime":null,"YearRange":"16.27 - 30.15","DaysValueChange":null,"DaysValueChangeRealtime":null,"StockExchange":"SAO","DividendYield":null,"PercentChange":"+1.02%"}}}}
-        */    
+    /*     
     //String 
     cotacao.symbol = quote.getString("symbol"); //"symbol":"BBDC3.SA"
+    */
     //double 
     cotacao.Ask = quote.getDouble("Ask"); //"Ask":"25.72"
+    /*
     //int 
     cotacao.AverageDailyVolume = quote.getInt("AverageDailyVolume"); //"AverageDailyVolume":"1532470"
     //float 
@@ -340,160 +340,170 @@ public class StockQuoter {
     //float 
     cotacao.AskRealtime; //"AskRealtime":null
     //float 
-    cotacao.BidRealtime;
+    cotacao.BidRealtime; //"BidRealtime":null
     //float 
-    cotacao.BookValue;
+    cotacao.BookValue; //"BookValue":"16.87"
     //String 
-    cotacao.Change_PercentChange;
+    cotacao.Change_PercentChange; //"Change_PercentChange":"+0.26 - +1.02%"
     //float 
-    cotacao.Change;
+    cotacao.Change; //"Change":"+0.26"
     //String 
-    cotacao.Commission;
+    cotacao.Commission; //"Commission":null
+    
+    //cotacao.Currency; //"Currency":"BRL"
+
     //float 
-    cotacao.ChangeRealtime;
+    cotacao.ChangeRealtime; //"ChangeRealtime":null
     //String 
-    cotacao.AfterHoursChangeRealtime;
+    cotacao.AfterHoursChangeRealtime; //"AfterHoursChangeRealtime":null
     //String 
-    cotacao.DividendShare;
+    cotacao.DividendShare; //"DividendShare":null
     //Date 
-    cotacao.LastTradeDate;
+    cotacao.LastTradeDate; //"LastTradeDate":"6/17/2016"
     //Date 
-    cotacao.TradeDate;
+    cotacao.TradeDate; //"TradeDate":null
     //float 
-    cotacao.EarningsShare;
+    cotacao.EarningsShare; //"EarningsShare":"3.33"
     //String 
-    cotacao.ErrorIndicationreturnedforsymbolchangedinvalid;
+    cotacao.ErrorIndicationreturnedforsymbolchangedinvalid; //"ErrorIndicationreturnedforsymbolchangedinvalid":null
     //float 
-    cotacao.EPSEstimateCurrentYear;
+    cotacao.EPSEstimateCurrentYear; //"EPSEstimateCurrentYear":null
     //float 
-    cotacao.EPSEstimateNextYear;
+    cotacao.EPSEstimateNextYear; //"EPSEstimateNextYear":null
     //float 
-    cotacao.EPSEstimateNextQuarter;
+    cotacao.EPSEstimateNextQuarter; //"EPSEstimateNextQuarter":"0.00"
     //float 
-    cotacao.DaysLow;
+    cotacao.DaysLow; //"DaysLow":"25.63"
     //float 
-    cotacao.DaysHigh;
-    //float 
-    cotacao.YearLow;
-    //float 
-    cotacao.YearHigh;
+    cotacao.DaysHigh; //"DaysHigh":"26.05"   
+    */
+    //double 
+    cotacao.YearLow = quote.getDouble("YearLow"); //"YearLow":"16.27"  
+    //double 
+    cotacao.YearHigh = quote.getDouble("YearHigh"); //"YearHigh":"30.15"        
+    /*
     //String 
-    cotacao.HoldingsGainPercent;
+    cotacao.HoldingsGainPercent; //"HoldingsGainPercent":null        
     //float 
-    cotacao.AnnualizedGain;
+    cotacao.AnnualizedGain; //"AnnualizedGain":null        
     //float 
-    cotacao.HoldingsGain;
+    cotacao.HoldingsGain; //"HoldingsGain":null 
     //String 
-    cotacao.HoldingsGainPercentRealtime;
+    cotacao.HoldingsGainPercentRealtime; //"HoldingsGainPercentRealtime":null 
     //float 
-    cotacao.HoldingsGainRealtime;
+    cotacao.HoldingsGainRealtime; //"HoldingsGainRealtime":null        
     //String 
-    cotacao.MoreInfo;
+    cotacao.MoreInfo; //"MoreInfo":null              
     //String 
-    cotacao.OrderBookRealtime;
+    cotacao.OrderBookRealtime; //"OrderBookRealtime":null            
     //String 
-    cotacao.MarketCapitalization;
+    cotacao.MarketCapitalization; //"MarketCapitalization":"142.17B"
     //String 
-    cotacao.MarketCapRealtime;
+    cotacao.MarketCapRealtime; //"MarketCapRealtime":null         
     //String 
-    cotacao.EBITDA;
+    cotacao.EBITDA; //"EBITDA":"0.00"               
     //float 
-    cotacao.ChangeFromYearLow;
+    cotacao.ChangeFromYearLow; //"ChangeFromYearLow":"9.43"   
     //String 
-    cotacao.PercentChangeFromYearLow;
+    cotacao.PercentChangeFromYearLow; //"PercentChangeFromYearLow":"+57.93%"        
     //String 
-    cotacao.LastTradeRealtimeWithTime;
+    cotacao.LastTradeRealtimeWithTime; //"LastTradeRealtimeWithTime":null        
     //String 
-    cotacao.ChangePercentRealtime;
+    cotacao.ChangePercentRealtime; //    "ChangePercentRealtime":null        
     //float 
-    cotacao.ChangeFromYearHigh;
+    cotacao.ChangeFromYearHigh; //    "ChangeFromYearHigh":"-4.45"        
     //String 
-    cotacao.PercebtChangeFromYearHigh;
+    cotacao.PercebtChangeFromYearHigh; //    "PercebtChangeFromYearHigh":"-14.75%"        
     //String 
-    cotacao.LastTradeWithTime;
+    cotacao.LastTradeWithTime; //    "LastTradeWithTime":"12:22pm - <b>25.70</b>"        
     //float 
-    cotacao.LastTradePriceOnly;
+    cotacao.LastTradePriceOnly; //    "LastTradePriceOnly":"25.70"        
     //String 
-    cotacao.HighLimit;
+    cotacao.HighLimit; //    "HighLimit":null,"LowLimit":ull
     //String 
-    cotacao.LowLimit;
+    cotacao.LowLimit; //    
     //String 
-    cotacao.DaysRange;
+    cotacao.DaysRange; //"DaysRange":"25.63 - 26.05"
     //String 
-    cotacao.DaysRangeRealtime;
+    cotacao.DaysRangeRealtime; //    "DaysRangeRealtime":null
     //float 
-    cotacao.FiftydayMovingAverage;
+    cotacao.FiftydayMovingAverage; //    "FiftydayMovingAverage":"26.51"        
     //float 
-    cotacao.TwoHundreddayMovingAverage;
+    cotacao.TwoHundreddayMovingAverage; //    "TwoHundreddayMovingAverage":"23.33"        
     //float 
-    cotacao.ChangeFromTwoHundreddayMovingAverage;
+    cotacao.ChangeFromTwoHundreddayMovingAverage; //    "ChangeFromTwoHundreddayMovingAverage":"2.37"        
     //String 
-    cotacao.PercentChangeFromTwoHundreddayMovingAverage;
+    cotacao.PercentChangeFromTwoHundreddayMovingAverage; //    "PercentChangeFromTwoHundreddayMovingAverage":"+10.14%"        
     //float 
-    cotacao.ChangeFromFiftydayMovingAverage;
+    cotacao.ChangeFromFiftydayMovingAverage; //    "ChangeFromFiftydayMovingAverage":"-0.81"        
     //String 
-    cotacao.PercentChangeFromFiftydayMovingAverage;
+    cotacao.PercentChangeFromFiftydayMovingAverage; //    "PercentChangeFromFiftydayMovingAverage":"-3.06%"        
     //String 
-    cotacao.Name;
+    cotacao.Name; //    "Name":"BRADESCO    ON  EJ  N1"        
     //String 
-    cotacao.Notes;
+    cotacao.Notes;  //    "Notes":null        
     //float 
-    cotacao.Open;
+    cotacao.Open; //   "Open":"25.77"        
     //float 
-    cotacao.PreviousClose;
+    cotacao.PreviousClose; //    "PreviousClose":"25.44"        
     //float 
-    cotacao.PricePaid;
+    cotacao.PricePaid; //    "PricePaid":null        
     //String 
-    cotacao.ChangeinPercent;
+    cotacao.ChangeinPercent; //    "ChangeinPercent":"+1.02%"        
     //float 
-    cotacao.PriceSales;
+    cotacao.PriceSales; //    "PriceSales":"2.28"        
     //float 
-    cotacao.PriceBook;
+    cotacao.PriceBook; //    "PriceBook":"1.51"        
     //Date 
-    cotacao.ExDividendDate;
+    cotacao.ExDividendDate; //    "ExDividendDate":"6/2/2016"        
     //float 
-    cotacao.PERatio;
+    cotacao.PERatio; //    "PERatio":"7.72"        
     //Date 
-    cotacao.DividendPayDate;
+    cotacao.DividendPayDate; //    "DividendPayDate":null        
     //float 
-    cotacao.PERatioRealtime;
+    cotacao.PERatioRealtime; //    "PERatioRealtime":null        
     //float 
-    cotacao.PEGRatio;
+    cotacao.PEGRatio; //    "PEGRatio":"0.00"
     //float 
-    cotacao.PriceEPSEstimateCurrentYear;
+    cotacao.PriceEPSEstimateCurrentYear; //    "PriceEPSEstimateCurrentYear":null
     //float 
-    cotacao.PriceEPSEstimateNextYear;
+    cotacao.PriceEPSEstimateNextYear; //    "PriceEPSEstimateNextYear":null
+    */
     //String 
-    cotacao.Symbol;
+    cotacao.Symbol = quote.getString("Symbol"); //    "Symbol":"BBDC3.SA"
+    /*
     //String 
-    cotacao.SharesOwned;
+    cotacao.SharesOwned; //    "SharesOwned":null
     //float 
-    cotacao.ShortRatio;
+    cotacao.ShortRatio; //    "ShortRatio":"0.00"
     //Date 
-    cotacao.LastTradeTime;
+    cotacao.LastTradeTime; //    "LastTradeTime":"12:22pm"
     //String 
-    cotacao.TickerTrend;
+    cotacao.TickerTrend;  //   "TickerTrend":null
     //float 
-    cotacao.OneyrTargetPrice;
+    cotacao.OneyrTargetPrice; //    "OneyrTargetPrice":null
     //int 
-    cotacao.Volume;
+    cotacao.Volume; //    "Volume":"218200"
     //float 
-    cotacao.HoldingsValue;
+    cotacao.HoldingsValue; //   "HoldingsValue":null
     //float 
-    cotacao.HoldingsValueRealtime;
+    cotacao.HoldingsValueRealtime; //    "HoldingsValueRealtime":null
     //String 
-    cotacao.YearRange;
+    cotacao.YearRange; //    "YearRange":"16.27 - 30.15"
     //String 
-    cotacao.DaysValueChange;
+    cotacao.DaysValueChange; //    "DaysValueChange":null
     //String 
-    cotacao.DaysValueChangeRealtime;
+    cotacao.DaysValueChangeRealtime; //    "DaysValueChangeRealtime":null
     //String 
-    cotacao.StockExchange;
+    cotacao.StockExchange; //    "StockExchange":"SAO"
     //float 
-    cotacao.DividendYield;
+    cotacao.DividendYield; //    "DividendYield":null       
     //String 
-    cotacao.PercentChange;
-       
+    cotacao.PercentChange; //        "PercentChange":"+1.02%"
+    */        
+        
+    
+        
     return cotacao;
     }
 }

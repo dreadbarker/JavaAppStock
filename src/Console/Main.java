@@ -110,11 +110,13 @@ public class Main {
                     sb.append("IDIV: ????; "); //Destaque do IDIV
                     //http://finance.yahoo.com/news/investing-education--p-e-ratio-191844134.html
                     //Perto de 1 = cálcular para dobrar... P/E (ttm) e EPS (ttm):
+                    /*
                     sb.append("PEG: ");
                     if (stock.PEGRatio > 0)
                         sb.append(stock.PEGRatio);
                     else
                         sb.append("???");
+                    */
                     sb.append("; ");
                     System.out.println(sb.toString());
                 }
@@ -124,6 +126,7 @@ public class Main {
                 System.out.println("erro ao converter :" + acao + ";"); 
             }
         }
+        
         System.out.println();
     }
 
