@@ -502,6 +502,7 @@ public class StockQuoter {
     cotacao.PercentChange; //        "PercentChange":"+1.02%"
     */        
         
+    
         
     return cotacao;
     }

@@ -126,6 +126,7 @@ public class Main {
                 System.out.println("erro ao converter :" + acao + ";"); 
             }
         }
+        
         System.out.println();
     }
 

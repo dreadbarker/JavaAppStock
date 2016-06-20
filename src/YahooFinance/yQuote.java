@@ -14,6 +14,7 @@ import java.util.Date;
 public class yQuote {
       
     public double Ask;
+    
     /*
     public int AverageDailyVolume;
     public float Bid;
