@@ -12,8 +12,9 @@ import java.util.Date;
  * @author Jean Pierre Patzlaff
  */
 public class yQuote {
-    public String symbol;
+      
     public double Ask;
+    /*
     public int AverageDailyVolume;
     public float Bid;
     public float AskRealtime;
@@ -34,8 +35,10 @@ public class yQuote {
     public float EPSEstimateNextQuarter;
     public float DaysLow;
     public float DaysHigh;
-    public float YearLow;
-    public float YearHigh;
+    */
+    public double YearLow;    
+    public double YearHigh;
+    /*
     public String HoldingsGainPercent;
     public float AnnualizedGain;
     public float HoldingsGain;
@@ -79,7 +82,9 @@ public class yQuote {
     public float PEGRatio;
     public float PriceEPSEstimateCurrentYear;
     public float PriceEPSEstimateNextYear;
+    */
     public String Symbol;
+    /*
     public String SharesOwned;
     public float ShortRatio;
     public Date LastTradeTime;
@@ -94,4 +99,5 @@ public class yQuote {
     public String StockExchange;
     public float DividendYield;
     public String PercentChange;
+    */
 }
